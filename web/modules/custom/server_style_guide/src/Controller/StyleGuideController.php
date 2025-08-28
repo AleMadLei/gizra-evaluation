@@ -25,6 +25,7 @@ use Drupal\server_general\ThemeTrait\Enum\HtmlTagEnum;
 use Drupal\server_general\ThemeTrait\InfoCardThemeTrait;
 use Drupal\server_general\ThemeTrait\LinkThemeTrait;
 use Drupal\server_general\ThemeTrait\NewsTeasersThemeTrait;
+use Drupal\server_general\ThemeTrait\PeopleCardThemeTrait;
 use Drupal\server_general\ThemeTrait\PeopleTeasersThemeTrait;
 use Drupal\server_general\ThemeTrait\QuickLinksThemeTrait;
 use Drupal\server_general\ThemeTrait\QuoteThemeTrait;
@@ -57,6 +58,7 @@ class StyleGuideController extends ControllerBase {
   use InfoCardThemeTrait;
   use LinkThemeTrait;
   use NewsTeasersThemeTrait;
+  use PeopleCardThemeTrait;
   use PeopleTeasersThemeTrait;
   use QuickLinksThemeTrait;
   use QuoteThemeTrait;
@@ -308,20 +310,13 @@ class StyleGuideController extends ControllerBase {
    *   Render array.
    */
   protected function getPersonCard(): array {
-    return $this->buildElementLayoutTitleAndContent(
-      'Person Card',
-      [
-        '#type' => 'component',
-        '#component' => 'server_general:person_card',
-        '#props' => [
-          'name' => 'Jane Cooper',
-          'role' => 'Admin',
-          'title' => 'Paradigm Representative',
-          'email' => 'someone@somewhere.com',
-          'phone' => '+18001234567',
-          'src' => $this->getPlaceholderPersonImage(128),
-        ],
-      ]
+    return $this->buildElementPersonCard(
+      $this->getPlaceholderPersonImage(128),
+      'Jane Cooper',
+      'Admin',
+      'Paradigm Representative',
+      'someone@somewhere.com',
+      '+18001234567',
     );
   }
 
@@ -346,29 +341,19 @@ class StyleGuideController extends ControllerBase {
     ];
     $cards = [];
     foreach ($names as $name) {
-      $cards[] = [
-        '#type' => 'component',
-        '#component' => 'server_general:person_card',
-        '#props' => [
-          'name' => $name,
-          'role' => 'Admin',
-          'title' => 'Paradigm Representative',
-          'email' => 'someone@somewhere.com',
-          'phone' => '+18001234567',
-          'src' => $this->getPlaceholderPersonImage(128),
-        ],
-      ];
+      $cards[] = $this->buildElementPersonCard(
+        $this->getPlaceholderPersonImage(128),
+        $name,
+        'Admin',
+        'Paradigm Representative',
+        'someone@somewhere.com',
+        '+18001234567',
+      );
     }
 
     return $this->buildElementLayoutTitleAndContent(
       'Person Cards',
-      [
-        '#type' => 'component',
-        '#component' => 'server_general:person_cards',
-        '#slots' => [
-          'cards' => $cards,
-        ],
-      ]
+      $this->buildElementPersonCards($cards)
     );
   }
 
