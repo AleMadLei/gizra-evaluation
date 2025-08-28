@@ -29,7 +29,6 @@ module.exports = {
     '../../../modules/custom/**/*.php',
     '../../../modules/custom/**/*.html.twig',
     '../../../modules/custom/*/js/**/*.js',
-    '../../../modules/custom/*/components/**/*.twig',
   ],
   safelist: [
     // Add here custom class names.
