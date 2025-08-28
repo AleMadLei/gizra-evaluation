@@ -25,6 +25,7 @@ use Drupal\server_general\ThemeTrait\Enum\HtmlTagEnum;
 use Drupal\server_general\ThemeTrait\InfoCardThemeTrait;
 use Drupal\server_general\ThemeTrait\LinkThemeTrait;
 use Drupal\server_general\ThemeTrait\NewsTeasersThemeTrait;
+use Drupal\server_general\ThemeTrait\PeopleCardThemeTrait;
 use Drupal\server_general\ThemeTrait\PeopleTeasersThemeTrait;
 use Drupal\server_general\ThemeTrait\QuickLinksThemeTrait;
 use Drupal\server_general\ThemeTrait\QuoteThemeTrait;
@@ -57,6 +58,7 @@ class StyleGuideController extends ControllerBase {
   use InfoCardThemeTrait;
   use LinkThemeTrait;
   use NewsTeasersThemeTrait;
+  use PeopleCardThemeTrait;
   use PeopleTeasersThemeTrait;
   use QuickLinksThemeTrait;
   use QuoteThemeTrait;
@@ -192,6 +194,12 @@ class StyleGuideController extends ControllerBase {
     $element = $this->getPeopleTeasers();
     $build[] = $this->wrapElementNoContainer($element, 'Element: People teasers');
 
+    $element = $this->getPersonCard();
+    $build[] = $this->wrapElementNoContainer($element, 'Element: Person card');
+
+    $element = $this->getPersonCards();
+    $build[] = $this->wrapElementNoContainer($element, 'Element: Person cards');
+
     $element = $this->getQuote();
     $build[] = $this->wrapElementNoContainer($element, 'Element: Quote');
 
@@ -292,6 +300,60 @@ class StyleGuideController extends ControllerBase {
       $this->getRandomTitle(),
       $this->buildProcessedText('This is a directory list of awesome people'),
       $items,
+    );
+  }
+
+  /**
+   * Get People teasers element.
+   *
+   * @return array
+   *   Render array.
+   */
+  protected function getPersonCard(): array {
+    return $this->buildElementPersonCard(
+      $this->getPlaceholderPersonImage(128),
+      'Jane Cooper',
+      'Admin',
+      'Paradigm Representative',
+      'someone@somewhere.com',
+      '+18001234567',
+    );
+  }
+
+
+  /**
+   * Get People teasers element.
+   *
+   * @return array
+   *   Render array.
+   */
+  protected function getPersonCards(): array {
+
+    $names = [
+      'Jane Cooper',
+      'John Doe',
+      'Smith Allen',
+      'David Bowie',
+      'Rick Sanchez',
+      'Morty Smith',
+      'Jane Doe',
+      'Steven Universe',
+    ];
+    $cards = [];
+    foreach ($names as $name) {
+      $cards[] = $this->buildElementPersonCard(
+        $this->getPlaceholderPersonImage(128),
+        $name,
+        'Admin',
+        'Paradigm Representative',
+        'someone@somewhere.com',
+        '+18001234567',
+      );
+    }
+
+    return $this->buildElementLayoutTitleAndContent(
+      'Person Cards',
+      $this->buildElementPersonCards($cards)
     );
   }
 

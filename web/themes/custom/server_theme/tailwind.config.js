@@ -6,6 +6,9 @@ module.exports = {
       maxWidth: {
         '8xl': '90rem'
       },
+      padding: {
+        '8': '32px'
+      },
       textUnderlineOffset: {
         '6': '6px'
       }
